@@ -1,0 +1,16 @@
+os: osx
+osx_image: xcode9.3
+language: node_js
+node_js: '8'
+script:
+  - brew install rpm
+  - git clone https://github.com/lukechilds/hyperdex
+  - cd hyperdex/app
+  - npx dot-json package.json name 'hyperdex-nightly'
+  - npx dot-json package.json productName 'HyperDEX Nightly'
+  - npx dot-json package.json version "0.0.0-$(git rev-parse --short HEAD)-$(echo $(npx utc-version))"
+  - cd ..
+  - npx dot-json package.json repository 'lukechilds/hyperdex-nightlies'
+  - npx dot-json package.json build.appId 'com.lukechilds.hyperdex-nightly'
+  - npm install
+  - npm run dist -- --publish=always
