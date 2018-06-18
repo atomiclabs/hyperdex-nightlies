@@ -1,7 +1,7 @@
 #!/bin/bash
 
 brew install rpm
-git clone https://github.com/lukechilds/hyperdex
+git clone https://github.com/hyperdexapp/hyperdex
 
 cd hyperdex/app
 LATEST_COMMIT_SHA=$(git rev-parse HEAD)
@@ -13,8 +13,8 @@ npx dot-json package.json version "0.0.0-$LATEST_COMMIT_SHA_SHORT-$(echo $(npx u
 cd ..
 LATEST_NIGHTLY_TAG=$(cd .. && git describe --tags $(git rev-list --tags --max-count=1))
 NIGHTLY_HYPERDEX_COMMIT=$(git rev-parse $(echo "$LATEST_NIGHTLY_TAG" | cut -d- -f2))
-RELEASE_NOTES="Changes: https://github.com/lukechilds/hyperdex/compare/$NIGHTLY_HYPERDEX_COMMIT...$LATEST_COMMIT_SHA"
-npx dot-json package.json repository 'lukechilds/hyperdex-nightlies'
+RELEASE_NOTES="Changes: https://github.com/hyperdexapp/hyperdex/compare/$NIGHTLY_HYPERDEX_COMMIT...$LATEST_COMMIT_SHA"
+npx dot-json package.json repository 'hyperdexapp/hyperdex-nightlies'
 npx dot-json package.json build.appId 'com.lukechilds.hyperdex-nightly'
 
 npm install
